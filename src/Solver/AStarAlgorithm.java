@@ -95,12 +95,7 @@ public class AStarAlgorithm {
     {
         return closed;
     }   
-    
-    public static int calculateH(Node current, Node finish)
-    {
-        return Math.abs(current.getWidth() - finish.getWidth()) + Math.abs(current.getHeight() - finish.getHeight());
-    }
-    
+
     public static int calculateH(int start_height, int start_width, int finish_height, int finish_width)
     {
         return 10*Math.abs(start_height - finish_height) + 10*Math.abs(start_width - finish_width);

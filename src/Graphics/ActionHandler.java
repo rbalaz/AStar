@@ -39,12 +39,16 @@ public class ActionHandler implements ActionListener{
                 }
                 catch(InvalidFileException ife)
                 {
-                    ErrorMessage error = new ErrorMessage("Fatal error","File" + getFileName() + " has unsupported format!",gui.getFrame());
+                    ErrorMessage error = new ErrorMessage("Fatal error","File " + getFileName() + " has unsupported format!",gui.getFrame());
                     error.displayMessage();
+                    ife.printStackTrace();
                 }
                 break;
             case "Close":
                 System.exit(0);
+                break;
+            case "QuickSolve":
+                callQuickSolvingAlgorithm();
                 break;
         }
     }
@@ -53,6 +57,7 @@ public class ActionHandler implements ActionListener{
     {
         if(fileIsLoaded)
         {
+            gui.resetCells();
             AStarAlgorithm solver = new AStarAlgorithm(init.getStartCoords(),init.getFinishCoords(),init.getFieldCoords(),init.getBlocks());
             List<Node> route = solver.solve();
             if(route == null)
@@ -66,6 +71,29 @@ public class ActionHandler implements ActionListener{
                 gui.paintClosed(solver.getClosed().getList());
                 gui.paintOptimal(route);
             }
+        }
+        else
+        {
+            WarningMessage warning = new WarningMessage("File warning","File might not have been properly loaded. Try again.",gui.getFrame());
+            warning.displayMessage();
+        }
+    }
+    
+    private void callQuickSolvingAlgorithm()
+    {
+        if(fileIsLoaded)
+        {
+            gui.resetCells();
+            AStarAlgorithm solver = new AStarAlgorithm(init.getStartCoords(),init.getFinishCoords(),init.getFieldCoords(),init.getBlocks());
+            List<Node> route = solver.solve();
+            if(route == null)
+            {
+                gui.paintClosed(solver.getClosed().getList());
+                ErrorMessage error = new ErrorMessage("Solving error","Given problem can't be solved. Please try a different field.",gui.getFrame());
+                error.displayMessage();
+            }
+            else
+                gui.paintOptimal(route);
         }
         else
         {

@@ -58,8 +58,10 @@ public class FileChecker {
                 return false;
             if(checkFinish(line) && finishFound == false)
                 finishFound = true;
-            if(checkIllegalSymbols(line))
+            if(checkIllegalSymbols(line) && lines > 2)
+            {
                 return false;
+            }
         }
         bfr.close();
         fr.close();
@@ -108,8 +110,9 @@ public class FileChecker {
     {
         for(int i = 0; i < line.length(); i++)
         {
-            if(line.charAt(i) != '-' && line.charAt(i) != '#' && line.charAt(i) != 'S' && line.charAt(i) != 'C')
-                return true;
+            if(line.charAt(i) != '-' && line.charAt(i) != '#' && line.charAt(i) != 'S' && line.charAt(i) != 'C' && line.charAt(i) != '.')
+                if(Character.isWhitespace(line.charAt(i)) == false)
+                    return true;
         }
         
         return false;

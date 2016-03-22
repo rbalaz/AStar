@@ -72,6 +72,8 @@ public class GUI {
         gui.add(tools,BorderLayout.PAGE_START);
         tools.add(createExecuter());
         tools.addSeparator();
+        tools.add(createQuickExecuter());
+        tools.addSeparator();
         tools.add(createFileReader());
         tools.addSeparator();
         JLabel text = new JLabel("Please load from file:");
@@ -96,6 +98,21 @@ public class GUI {
         };
         execute.setFont(new Font("Arial",Font.ITALIC,14));
         execute.setText("Solve");
+        execute.addActionListener(handler);
+        return execute;
+    }
+    
+    private JButton createQuickExecuter()
+    {
+        JButton execute = new JButton() {
+            @Override
+            public Dimension getPreferredSize()
+            {
+                return new Dimension(140,30);
+            }
+        };
+        execute.setFont(new Font("Arial",Font.ITALIC,14));
+        execute.setText("QuickSolve");
         execute.addActionListener(handler);
         return execute;
     }
@@ -191,6 +208,17 @@ public class GUI {
             gui.remove(board);
             gui.revalidate();
         }
+    }
+    
+    public void resetCells()
+    {
+        for (JPanel[] cell : cells) {
+            for (JPanel cell1 : cell) {
+                if(cell1.getBackground() == Color.ORANGE || cell1.getBackground() == Color.GREEN)
+                    cell1.setBackground(Color.LIGHT_GRAY);
+            }
+        }
+        gui.paintImmediately(0,0,frame.getWidth(),frame.getHeight());
     }
     
     public JFrame getFrame()
