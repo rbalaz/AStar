@@ -59,9 +59,7 @@ public class FileChecker {
             if(checkFinish(line) && finishFound == false)
                 finishFound = true;
             if(checkIllegalSymbols(line) && lines > 2)
-            {
                 return false;
-            }
         }
         bfr.close();
         fr.close();

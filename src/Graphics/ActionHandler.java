@@ -88,7 +88,6 @@ public class ActionHandler implements ActionListener{
             List<Node> route = solver.solve();
             if(route == null)
             {
-                gui.paintClosed(solver.getClosed().getList());
                 ErrorMessage error = new ErrorMessage("Solving error","Given problem can't be solved. Please try a different field.",gui.getFrame());
                 error.displayMessage();
             }
